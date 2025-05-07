@@ -25,6 +25,6 @@ jobs:
       
       - run: sam build
       
-      - run: sam deploy --no-confirm-changeset --stack-name users-api-${{ matrix.stage }} --resolve-s3
+      - run: sam deploy --no-confirm-changeset --stack-name users-api-${{ matrix.stage }} --resolve-s3 --capabilities CAPABILITY_IAM
         env:
           STAGE: ${{ matrix.stage }}
