@@ -1,0 +1,26 @@
+name: Deploy API
+on: [push]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        stage: [dev, prod]
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: eu-west-1
+
+      - uses: aws-actions/setup-sam@v2
+      
+      - run: sam build
+      
+      - run: sam deploy --no-confirm-changeset
+        env:
+          STAGE: ${{ matrix.stage }}
