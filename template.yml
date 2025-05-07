@@ -25,7 +25,7 @@ Resources:
         GetUsersDev:
           Type: Api
           Properties:
-            Path: /users
+            Path: /dev/users
             Method: GET
             RestApiId: !Ref UsersApi
 
@@ -40,7 +40,7 @@ Resources:
         GetUsersProd:
           Type: Api
           Properties:
-            Path: /users
+            Path: /prod/users
             Method: GET
             RestApiId: !Ref UsersApi
 
