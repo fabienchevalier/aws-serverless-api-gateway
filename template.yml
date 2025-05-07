@@ -14,16 +14,36 @@ Resources:
       CacheClusterEnabled: true
       CacheClusterSize: '0.5'
 
-  UsersFunction:
+  DevUsersFunction:
     Type: AWS::Serverless::Function
+    Condition: IsDev
     Properties:
       CodeUri: src/
-      Handler: lambda_handler.lambda_handler
+      Handler: lambda_handler_dev.lambda_handler
       Runtime: python3.9
       Events:
-        GetUsers:
+        GetUsersDev:
           Type: Api
           Properties:
             Path: /users
             Method: GET
             RestApiId: !Ref UsersApi
+
+  ProdUsersFunction:
+    Type: AWS::Serverless::Function
+    Condition: IsProd
+    Properties:
+      CodeUri: src/
+      Handler: lambda_handler_prod.lambda_handler
+      Runtime: python3.9
+      Events:
+        GetUsersProd:
+          Type: Api
+          Properties:
+            Path: /users
+            Method: GET
+            RestApiId: !Ref UsersApi
+
+Conditions:
+  IsDev: !Equals [!Ref Stage, dev]
+  IsProd: !Equals [!Ref Stage, prod]
