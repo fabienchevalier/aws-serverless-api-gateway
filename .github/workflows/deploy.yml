@@ -25,6 +25,6 @@ jobs:
       
       - run: sam build
       
-      - run: sam deploy --no-confirm-changeset
+      - run: sam deploy --no-confirm-changeset --stack-name users-api-${{ matrix.stage }}
         env:
           STAGE: ${{ matrix.stage }}
